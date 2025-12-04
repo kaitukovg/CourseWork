@@ -55,3 +55,9 @@ cmake --build . -- -j4
 
 # Запуск программы
 ./HMI_Player.exe
+```
+#### Запуск Тестов
+```bash
+cd tests
+./HMI_Tests.exe
+```
