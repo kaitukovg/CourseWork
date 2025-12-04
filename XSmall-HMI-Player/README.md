@@ -6,6 +6,8 @@
 ```bash
 mkdir build
 cd build
+cp "C:/Libraries/SFML/bin/"*.dll .
 cmake .. -G "MinGw Makefiles"
 cmake --build . --j4
+
 ./HMI_Player.exe
