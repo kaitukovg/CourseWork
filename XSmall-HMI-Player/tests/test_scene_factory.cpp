@@ -13,10 +13,9 @@ protected:
     
     void SetUp() override {
         // Пробуем несколько путей к шрифту
-        std::vector<std::string> fontPaths = {
-            "assets/fonts/helveticabold.ttf",
-            "assets/fonts/arial.ttf",
+        std::vector<std::string> fontPaths = {            
             "../assets/fonts/helveticabold.ttf",
+            "assets/fonts/helveticabold.ttf",
             "../../assets/fonts/helveticabold.ttf",
             "C:/Windows/Fonts/arial.ttf"
         };
@@ -36,7 +35,7 @@ protected:
     }
 };
 
-TEST_F(SceneFactiryrTest, CreateDemoScene) {
+TEST_F(SceneFactoryTest, CreateDemoScene) {
     // Проверяем, что шрифт загружен
     if (font.getInfo().family.empty()) {
         GTEST_SKIP() << "Шрифт не загружен, пропускаем тест CreateDemoScene";
@@ -74,5 +73,4 @@ TEST_F(SceneFactiryrTest, CreateDemoScene) {
     EXPECT_TRUE(db.variableExists("pressure_value")) << "Должна существовать переменная pressure_value";
     EXPECT_TRUE(db.variableExists("setpoint_value")) << "Должна существовать переменная setpoint_value";
     EXPECT_TRUE(db.variableExists("panel_status")) << "Должна существовать переменная panel_status";
-
 }
