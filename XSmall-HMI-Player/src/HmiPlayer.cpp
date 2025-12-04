@@ -14,8 +14,10 @@ HmiPlayer::HmiPlayer()
 bool HmiPlayer::initialize() {
     // Загружаем шрифт
     std::vector<std::string> fontPaths = {
+        "../assets/fonts/helveticabold.ttf",
         "assets/fonts/helveticabold.ttf",
-        "C:/projects/XSmall-HMI-Player/assets/fonts/helveticabold.ttf"//, 
+        "assets/fonts/arial.ttf",        
+        "../../assets/fonts/helveticabold.ttf"
     };
     
     bool fontLoaded = false;
