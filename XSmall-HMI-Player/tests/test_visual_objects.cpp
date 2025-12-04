@@ -17,7 +17,6 @@ protected:
         // Пробуем несколько путей к шрифту
         std::vector<std::string> fontPaths = {
             "assets/fonts/helveticabold.ttf",
-            "assets/fonts/arial.ttf",
             "../assets/fonts/helveticabold.ttf",
             "../../assets/fonts/helveticabold.ttf",
             "C:/Windows/Fonts/arial.ttf"
