@@ -3,24 +3,60 @@ project(XSmall-HMI-Player VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-# ========== НАСТРОЙКА SFML ==========
-set(SFML_PATH "C:/Libraries/SFML")
-message(STATUS "Ищем SFML в: ${SFML_PATH}")
+# Включаем FetchContent
+include(FetchContent)
 
-if(NOT EXISTS ${SFML_PATH})
-    message(FATAL_ERROR "❌ Путь к SFML не найден: ${SFML_PATH}")
-endif()
+# ========== SFML (СТАТИЧЕСКАЯ СБОРКА) ==========
+message(STATUS "Downloading SFML...")
 
-set(SFML_DIR "${SFML_PATH}/lib/cmake/SFML")
-find_package(SFML 2.5 COMPONENTS graphics system window REQUIRED)
-message(STATUS "✅ SFML найден")
+FetchContent_Declare(
+    sfml
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG 2.6.1
+    GIT_SHALLOW TRUE
+)
 
-# ========== НАСТРОЙКА ПУТЕЙ ==========
+# НАСТРОЙКИ ДЛЯ СТАТИЧЕСКОЙ СБОРКИ
+set(SFML_STATIC_LIBRARIES ON CACHE BOOL "Build static libraries" FORCE)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries" FORCE)
+
+# Отключаем ненужные модули
+set(SFML_BUILD_AUDIO OFF CACHE BOOL "Disable audio" FORCE)
+set(SFML_BUILD_NETWORK OFF CACHE BOOL "Disable network" FORCE)
+set(SFML_BUILD_EXAMPLES OFF CACHE BOOL "Disable examples" FORCE)
+set(SFML_BUILD_DOC OFF CACHE BOOL "Disable docs" FORCE)
+
+FetchContent_MakeAvailable(sfml)
+message(STATUS "SFML downloaded (static)")
+
+# ========== GOOGLE TEST ==========
+message(STATUS "Downloading Google Test...")
+
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG v1.14.0
+    GIT_SHALLOW TRUE
+)
+
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(googletest)
+message(STATUS "Google Test downloaded")
+
+# ========== НАШ ПРОЕКТ ==========
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(${PROJECT_ROOT}/include ${SFML_INCLUDE_DIR})
 
-# ========== ГЛАВНАЯ ПРОГРАММА ==========
+# Директории с заголовками
+include_directories(
+    ${PROJECT_ROOT}/include
+    ${sfml_SOURCE_DIR}/include
+)
+
+# Исходные файлы
 set(SOURCES
     src/main.cpp
     src/VariableDatabase.cpp
@@ -37,14 +73,34 @@ set(SOURCES
     src/HmiPlayer.cpp
 )
 
+# Создаем исполняемый файл
 add_executable(HMI_Player ${SOURCES})
-target_link_libraries(HMI_Player sfml-graphics sfml-window sfml-system)
+
+# Добавляем определение для статической линковки
+target_compile_definitions(HMI_Player PRIVATE SFML_STATIC)
+
+# Подключаем SFML (используем цели CMake, они сами знают имена библиотек)
+target_link_libraries(HMI_Player PRIVATE
+    sfml-graphics
+    sfml-window
+    sfml-system
+)
+
+# Для Windows нужно добавить системные библиотеки для статической линковки
+if(WIN32)
+    target_link_libraries(HMI_Player PRIVATE
+        opengl32
+        winmm
+        gdi32
+        # freetype уже включен в sfml-graphics
+    )
+endif()
 
 # Копируем ресурсы
 file(COPY ${PROJECT_ROOT}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${PROJECT_ROOT}/config DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-message(STATUS "✅ Основное приложение настроено")
+message(STATUS "Main app configured (static)")
 
-# ========== ПОДКЛЮЧАЕМ ТЕСТЫ ==========
+# ========== ТЕСТЫ ==========
 add_subdirectory(tests)
