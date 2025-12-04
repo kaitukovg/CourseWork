@@ -6,7 +6,7 @@
 #include "VariableDatabase.h"
 #include "VisualObject.h"  
 
-class XmlLoaderTest : public ::testing::Test {
+class SceneFactoryTest : public ::testing::Test {
 protected:
     VariableDatabase db;
     sf::Font font;
@@ -36,7 +36,7 @@ protected:
     }
 };
 
-TEST_F(XmlLoaderTest, CreateDemoScene) {
+TEST_F(SceneFactiryrTest, CreateDemoScene) {
     // Проверяем, что шрифт загружен
     if (font.getInfo().family.empty()) {
         GTEST_SKIP() << "Шрифт не загружен, пропускаем тест CreateDemoScene";
@@ -74,4 +74,5 @@ TEST_F(XmlLoaderTest, CreateDemoScene) {
     EXPECT_TRUE(db.variableExists("pressure_value")) << "Должна существовать переменная pressure_value";
     EXPECT_TRUE(db.variableExists("setpoint_value")) << "Должна существовать переменная setpoint_value";
     EXPECT_TRUE(db.variableExists("panel_status")) << "Должна существовать переменная panel_status";
+
 }
