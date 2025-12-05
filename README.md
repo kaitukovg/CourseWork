@@ -27,6 +27,7 @@
 ## Структура проекта
 
 ├── CMakeLists.txt
+
 ├── LICENSE
 
 ├── README.md
@@ -34,47 +35,89 @@
 ├── include/
 
 │   ├── VariableDatabase.h
+
 │   ├── VisualObject.h
+
 │   ├── Rectangle.h
+
 │   ├── Text.h
+
 │   ├── Line.h
+
 │   ├── Polyline.h
+
 │   ├── InputField.h
+
 │   ├── Button.h
+
 │   ├── HistoryGraph.h
+
 │   ├── Image.h
+
 │   ├── SceneFactory.h
+
 │   ├── resources.h
+
 │   ├── logger.h
+
 │   ├── Constants.h
+
 │   └── HmiPlayer.h
+
 ├── src/
+
 │   ├── main.cpp
+
 │   ├── VariableDatabase.cpp
+
 │   ├── VisualObject.cpp
+
 │   ├── Rectangle.cpp
+
 │   ├── Text.cpp
+
 │   ├── Line.cpp
+
 │   ├── Polyline.cpp
+
 │   ├── InputField.cpp
+
 │   ├── Button.cpp
+
 │   ├── HistoryGraph.cpp
+
 │   ├── Image.cpp
+
 │   ├── SceneFactory.cpp
+
 │   ├── logger.cpp
+
 │   └── HmiPlayer.cpp
+
 ├── tests/
+
 │   ├── CMakeLists.txt
+
 │   ├── test_main.cpp
+
 │   ├── test_variable_database.cpp
+
 │   ├── test_scene_factory.cpp
+
 │   └── test_visual_objects.cpp                
+
 ├── saved_state.json
+
 └── assets/
+
     ├── fonts/
+    
     │   └── helveticabold.ttf
+    
     └── images/
+    
         └── logo.png
+
 
 ## Требования
 
