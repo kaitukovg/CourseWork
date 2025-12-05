@@ -23,14 +23,14 @@ protected:
         bool loaded = false;
         for (const auto& path : fontPaths) {
             if (font.loadFromFile(path)) {
-                std::cout << "Тестовый шрифт загружен из: " << path << std::endl;
+                std::cout << "Test font is loaded from: " << path << std::endl;
                 loaded = true;
                 break;
             }
         }
         
         if (!loaded) {
-            std::cerr << "ВНИМАНИЕ: Не удалось загрузить тестовый шрифт!" << std::endl;
+            std::cerr << "WARNING: couldn't load test font!" << std::endl;
         }
     }
 };
@@ -38,17 +38,17 @@ protected:
 TEST_F(SceneFactoryTest, CreateDemoScene) {
     // Проверяем, что шрифт загружен
     if (font.getInfo().family.empty()) {
-        GTEST_SKIP() << "Шрифт не загружен, пропускаем тест CreateDemoScene";
+        GTEST_SKIP() << "The font is not loaded, we skip the test CreateDemoScene";
     }
     
     auto objects = SceneFactory::createDemoScene(&db, &font);
     
     // Проверяем, что объекты созданы
-    ASSERT_GT(objects.size(), 0) << "Должен быть создан хотя бы один объект";
+    ASSERT_GT(objects.size(), 0) << "At least one object must be created.";
     
     // Проверяем, что можем получить имена объектов
     for (const auto& obj : objects) {
-        EXPECT_FALSE(obj->getName().empty()) << "Объект должен иметь имя";
+        EXPECT_FALSE(obj->getName().empty()) << "The object must have a name";
     }
     
     // Проверяем основные типы объектов
@@ -64,13 +64,14 @@ TEST_F(SceneFactoryTest, CreateDemoScene) {
         if (name.find("Button") != std::string::npos) hasButton = true;
     }
     
-    EXPECT_TRUE(hasRectangle) << "Должен быть хотя бы один прямоугольник";
-    EXPECT_TRUE(hasText) << "Должен быть хотя бы один текст";
-    EXPECT_TRUE(hasButton) << "Должна быть хотя бы одна кнопка";
+    EXPECT_TRUE(hasRectangle) << "There must be at least one rectangle.";
+    EXPECT_TRUE(hasText) << "There must be at least one text.";
+    EXPECT_TRUE(hasButton) << "There must be at least one button.";
     
     // Проверяем инициализацию переменных в базе данных
-    EXPECT_TRUE(db.variableExists("temperature_value")) << "Должна существовать переменная temperature_value";
-    EXPECT_TRUE(db.variableExists("pressure_value")) << "Должна существовать переменная pressure_value";
-    EXPECT_TRUE(db.variableExists("setpoint_value")) << "Должна существовать переменная setpoint_value";
-    EXPECT_TRUE(db.variableExists("panel_status")) << "Должна существовать переменная panel_status";
+    EXPECT_TRUE(db.variableExists("temperature_value")) << "The variable temperature_value must exist";
+    EXPECT_TRUE(db.variableExists("pressure_value")) << "There must be a presure_value variable";
+    EXPECT_TRUE(db.variableExists("setpoint_value")) << "There must be a setpoint_value variable";
+    EXPECT_TRUE(db.variableExists("panel_status")) << "There must be a panel_status variable.";
 }
+
