@@ -27,9 +27,13 @@
 ## Структура проекта
 
 ├── CMakeLists.txt
+
 ├── LICENSE
+
 ├── README.md
+
 ├── include/
+
 │   ├── VariableDatabase.h
 │   ├── VisualObject.h
 │   ├── Rectangle.h
