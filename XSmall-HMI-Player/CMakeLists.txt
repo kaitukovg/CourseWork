@@ -98,9 +98,9 @@ endif()
 
 # Копируем ресурсы
 file(COPY ${PROJECT_ROOT}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${PROJECT_ROOT}/config DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 message(STATUS "Main app configured (static)")
 
 # ========== ТЕСТЫ ==========
 add_subdirectory(tests)
+
