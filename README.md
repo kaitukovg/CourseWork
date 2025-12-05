@@ -27,7 +27,6 @@
 ## Структура проекта
 
 ├── CMakeLists.txt
-
 ├── LICENSE
 
 ├── README.md
